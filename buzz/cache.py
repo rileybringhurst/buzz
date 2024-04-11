@@ -7,6 +7,7 @@ from typing import List
 from platformdirs import user_cache_dir
 
 from buzz.transcriber.transcriber import FileTranscriptionTask
+import fickling
 
 
 class TasksCache:
@@ -25,7 +26,7 @@ class TasksCache:
 
         try:
             with open(self.pickle_cache_file_path, "rb") as file:
-                return pickle.load(file)
+                return fickling.load(file)
         except FileNotFoundError:
             return []
         except (
