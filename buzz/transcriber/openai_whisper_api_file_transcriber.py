@@ -27,7 +27,7 @@ class OpenAIWhisperAPIFileTranscriber(FileTranscriber):
             self.task,
         )
 
-        mp3_file = tempfile.mktemp() + ".mp3"
+        mp3_file = tempfile.mkstemp() + ".mp3"
 
         cmd = ["ffmpeg", "-i", self.transcription_task.file_path, mp3_file]
 
@@ -69,7 +69,7 @@ class OpenAIWhisperAPIFileTranscriber(FileTranscriber):
             chunk_start = i * chunk_duration
             chunk_end = min((i + 1) * chunk_duration, duration_secs)
 
-            chunk_file = tempfile.mktemp() + ".mp3"
+            chunk_file = tempfile.mkstemp() + ".mp3"
 
             # fmt: off
             cmd = [

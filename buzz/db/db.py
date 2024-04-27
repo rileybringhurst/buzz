@@ -20,7 +20,7 @@ def setup_app_db() -> QSqlDatabase:
 
 
 def setup_test_db() -> QSqlDatabase:
-    return _setup_db(tempfile.mktemp())
+    return _setup_db(tempfile.mkstemp())
 
 
 def _setup_db(path: str) -> QSqlDatabase:

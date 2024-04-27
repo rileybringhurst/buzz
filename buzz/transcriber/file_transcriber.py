@@ -31,7 +31,7 @@ class FileTranscriber(QObject):
     @pyqtSlot()
     def run(self):
         if self.transcription_task.source == FileTranscriptionTask.Source.URL_IMPORT:
-            temp_output_path = tempfile.mktemp()
+            temp_output_path = tempfile.mkstemp()
 
             ydl = YoutubeDL(
                 {
