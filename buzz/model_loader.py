@@ -14,6 +14,7 @@ import requests
 from PyQt6.QtCore import QObject, pyqtSignal, QRunnable
 from platformdirs import user_cache_dir
 from tqdm.auto import tqdm
+from security import safe_requests
 
 whisper = None
 faster_whisper = None
@@ -28,7 +29,6 @@ if sys.platform != "linux":
 # the DLL in some envs is fixed.
 LOADED_WHISPER_CPP_BINARY = False
 try:
-    import buzz.whisper_cpp as whisper_cpp  # noqa: F401
 
     LOADED_WHISPER_CPP_BINARY = True
 except ImportError:
@@ -349,7 +349,7 @@ class ModelDownloader(QRunnable):
 
         # Downloads the model using the requests module instead of urllib to
         # use the certs from certifi when the app is running in frozen mode
-        with requests.get(url, stream=True, timeout=15) as source, open(
+        with safe_requests.get(url, stream=True, timeout=15) as source, open(
             tmp_file, "wb"
         ) as output:
             source.raise_for_status()
