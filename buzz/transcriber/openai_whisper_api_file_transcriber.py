@@ -10,6 +10,7 @@ from openai import OpenAI
 
 from buzz.transcriber.file_transcriber import FileTranscriber
 from buzz.transcriber.transcriber import FileTranscriptionTask, Segment, Task
+from security import safe_command
 
 
 class OpenAIWhisperAPIFileTranscriber(FileTranscriber):
@@ -32,7 +33,7 @@ class OpenAIWhisperAPIFileTranscriber(FileTranscriber):
         cmd = ["ffmpeg", "-i", self.transcription_task.file_path, mp3_file]
 
         try:
-            subprocess.run(cmd, capture_output=True, check=True)
+            safe_command.run(subprocess.run, cmd, capture_output=True, check=True)
         except subprocess.CalledProcessError as exc:
             logging.exception("")
             raise Exception(exc.stderr.decode("utf-8"))
@@ -47,7 +48,7 @@ class OpenAIWhisperAPIFileTranscriber(FileTranscriber):
         ]
         # fmt: on
         duration_secs = float(
-            subprocess.run(cmd, capture_output=True, check=True).stdout.decode("utf-8")
+            safe_command.run(subprocess.run, cmd, capture_output=True, check=True).stdout.decode("utf-8")
         )
 
         total_size = os.path.getsize(mp3_file)
@@ -81,7 +82,7 @@ class OpenAIWhisperAPIFileTranscriber(FileTranscriber):
                 chunk_file,
             ]
             # fmt: on
-            subprocess.run(cmd, capture_output=True, check=True)
+            safe_command.run(subprocess.run, cmd, capture_output=True, check=True)
             logging.debug('Created chunk file "%s"', chunk_file)
 
             segments.extend(
