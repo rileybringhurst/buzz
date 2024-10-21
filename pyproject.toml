@@ -29,6 +29,7 @@ stable-ts = { version = "2.15.9", markers = "sys_platform != 'linux'" }
 faster-whisper = { version = "^1.0.1", markers = "sys_platform != 'linux'" }
 openai-whisper = { version = "v20231117", markers = "sys_platform != 'linux'" }
 transformers = { version = "^4.39.1", markers = "sys_platform != 'linux'" }
+fickling = ">=0.1.3,~=0.1.0"
 
 [tool.poetry.group.dev.dependencies]
 autopep8 = "^1.7.0"
