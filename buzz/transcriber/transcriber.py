@@ -3,7 +3,6 @@ import enum
 import os
 import uuid
 from dataclasses import dataclass, field
-from random import randint
 from typing import List, Optional, Tuple, Set
 
 from dataclasses_json import dataclass_json, config, Exclude
@@ -11,6 +10,7 @@ from dataclasses_json import dataclass_json, config, Exclude
 from buzz.locale import _
 from buzz.model_loader import TranscriptionModel
 from buzz.settings.settings import Settings
+import secrets
 
 DEFAULT_WHISPER_TEMPERATURE = (0.0, 0.2, 0.4, 0.6, 0.8, 1.0)
 
@@ -176,7 +176,7 @@ class FileTranscriptionTask:
     file_transcription_options: FileTranscriptionOptions
     model_path: str
     # deprecated: use uid
-    id: int = field(default_factory=lambda: randint(0, 100_000_000))
+    id: int = field(default_factory=lambda: secrets.SystemRandom().randint(0, 100_000_000))
     uid: uuid.UUID = field(default_factory=uuid.uuid4)
     segments: List[Segment] = field(default_factory=list)
     status: Optional[Status] = None
