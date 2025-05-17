@@ -344,7 +344,8 @@ class ModelDownloader(QRunnable):
                     f"{file_path} exists, but the SHA256 checksum does not match; re-downloading the file"
                 )
 
-        tmp_file = tempfile.mktemp()
+        with tempfile.NamedTemporaryFile(delete=False) as tf:
+            tmp_file = tf.name
         logging.debug("Downloading to temporary file = %s", tmp_file)
 
         # Downloads the model using the requests module instead of urllib to
